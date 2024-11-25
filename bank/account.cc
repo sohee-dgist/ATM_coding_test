@@ -1,16 +1,18 @@
 #include "account.h"
-#include <cassert>
+
 namespace bank {
-dollar Account::Deposit(dollar amount) {
+bool Account::Deposit(dollar amount) {
     balance_ += amount;
-    return balance_;
+    return true;
 }
 
 // Withdraw money from an account
-dollar Account::Withdraw(dollar amount) {
-    assert((balance_ - amount) > 0);
+bool Account::Withdraw(dollar amount) {
+    if (balance_ - amount < 0) {
+        return false;
+    }
     balance_ -= amount;
-    return balance_;
+    return true;
 }
 
 // Check account balance
