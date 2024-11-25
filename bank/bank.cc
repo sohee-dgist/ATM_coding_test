@@ -1,8 +1,12 @@
 #include "bank.h"
 #include <iostream>
 #include "account.h"
-
+#include <random>
+#include "card/card.h"
 namespace bank {
+
+static int current_card_id = 1;
+static int current_account_id = 1;
 
 void Bank::SubmitEvent(const Event& event) {
     event_queue_.push(event);
@@ -96,12 +100,32 @@ void Bank::ProcessEvent(const Event& event) {
     }
 }
 
-card::Card* Bank::IssueCard(card_pin_t pin) {
-    return nullptr;
+card::Card Bank::IssueCard(card_pin_t pin) {
+    card_id_t card_id = current_card_id++;
+    card_and_passwords_[card_id] = pin;
+
+    std::cout << "Bank: Issued card with ID " << card_id << " and PIN " << pin << std::endl;
+    return card::Card(card_id);
 }
 
-Account* Bank::IssueAccount(card_id_t card_id, account_password_t password) {
-    return nullptr;
+void Bank::IssueAccount(card_id_t card_id, account_password_t password) {
+    if (card_and_passwords_.find(card_id) == card_and_passwords_.end()) {
+        std::cerr << "Bank: Cannot issue account. Card ID " << card_id << " not found." << std::endl;
+    }
+
+    account_id_t account_id = current_account_id++;
+
+
+    card_id_to_accounts_[card_id] = account_id;
+
+    account_id_to_accounts_.insert(
+        {account_id, Account(account_id, password, 0)}
+    );
+
+    std::cout << "Bank: Issued account with ID " << account_id
+              << " linked to card ID " << card_id
+              << " and password " << password << std::endl;
 
 }
+
 }

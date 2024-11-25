@@ -6,6 +6,7 @@
 #include <type_common.h>
 #include <functional>
 #include <queue>
+#include "account.h"
 
 namespace card{
 class Card;
@@ -13,7 +14,6 @@ class Card;
 
 namespace bank {
 
-class Account;
 
 enum class EventType {
     VerifyCard,
@@ -26,8 +26,8 @@ enum class EventType {
 struct Event {
     EventType type;
     // for card verify
-    card_pin_t card_id;
-    card_id_t card_pin;
+    card_id_t card_id;
+    card_pin_t card_pin;
     // for account verify
     account_id_t account_id;
     account_password_t password;
@@ -51,8 +51,8 @@ public:
     Bank() = default;
     ~Bank() = default;
 
-    card::Card *IssueCard(card_pin_t pin);
-    Account *IssueAccount(card_id_t card_id, account_password_t password);
+    card::Card IssueCard(card_pin_t pin);
+    void IssueAccount(card_id_t card_id, account_password_t password);
 
     void SubmitEvent(const Event& event);
     void ProcessAllEvents();
