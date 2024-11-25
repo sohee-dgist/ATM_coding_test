@@ -1,7 +1,6 @@
 #include "atm.h"
 #include <cassert>
 #include <iostream>
-#include "component/component.h"
 
 namespace atm {
 void ATM::StartSession() {
@@ -16,25 +15,4 @@ void ATM::StartSession() {
 void ATM::CloseSession() {
 
 }
-
-void ATM::MakeComponentForCheck(){
-    //잔액 조회
-}
-
-void ATM::MakeComponentForDeposit(){
-    assert("not implemented yet");
-}
-
-void ATM::MakeComponentForWithdrawl(){
-    //출금
-    assert("not implemented yet");
-}
-
-template <typename T>
-void ATM::AddComponent(int *component_index) {
-  T* component = new T(this);
-  components_.push_back(component);
-  component_mapper_[component->phase()] = (*component_index)++;
-}
-
 } // namspace atm

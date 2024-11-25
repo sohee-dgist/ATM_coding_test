@@ -46,12 +46,6 @@ public:
     // void ATM::insert_card(const card::Card& card);
     // void ATM::enter_pin(const card_pin_t& pin);
 private:
-    void MakeComponentForCheck();
-    void MakeComponentForDeposit();
-    void MakeComponentForWithdrawl();
-
-    template <typename T>
-    void AddComponent(int *component_index);
 
 };
 } // namespace atm
