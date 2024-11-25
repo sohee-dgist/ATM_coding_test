@@ -2,17 +2,11 @@
 #define ATM_H_
 
 #include <cstdint>
-#include <vector>
 #include "type_common.h"
-#include <unordered_map>
-
-namespace string {
-class string;
-}
+#include <string>
 
 namespace bank {
 class Bank;
-class Account;
 }
 
 namespace card {
@@ -31,22 +25,21 @@ enum class Mode {
 
 class ATM {
 private:
-    int16_t cash_reserve_ = 0;
-    std::vector<Component *> components_;
-    std::unordered_map<int, int> component_mapper_;
     bank::Bank& bank_;
+    dollar cash_reserve_;
 
 public:
-    explicit ATM(bank::Bank& bank) : bank_(bank) {}
+    explicit ATM(bank::Bank& bank) : bank_(bank), cash_reserve_(4096) {}
     ~ATM();
-    void StartSession();
-    void CloseSession();
+    bool PrepareSession(card_id_t card_id, card_pin_t pin);
+    bool StartSession(account_id_t account_id, account_password_t password);
 
+    bool SubmitCheckRequest(account_id_t account_id);
+    bool SubmitDepositRequest(account_id_t account_id, dollar amount);
+    bool SubmitWithdrawRequest(account_id_t account_id, dollar amount); // Check ATM First
 
-    // void ATM::insert_card(const card::Card& card);
-    // void ATM::enter_pin(const card_pin_t& pin);
 private:
-
+    void HandleResult(const std::string& result);
 };
 } // namespace atm
 #endif
