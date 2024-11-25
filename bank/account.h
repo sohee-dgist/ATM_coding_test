@@ -11,9 +11,9 @@ private:
     dollar balance_;
 
     friend class Bank;
-private:
+public:
     explicit Account (int id, account_password_t password, dollar balance) : id_(id), password_(password), balance_(balance) {}
-
+private:
     dollar CheckBalance() const;
     bool Deposit(dollar amount);
     bool Withdraw(dollar amount);
