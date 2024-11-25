@@ -26,10 +26,9 @@ enum class Mode {
 class ATM {
 private:
     bank::Bank& bank_;
-    dollar cash_reserve_;
 
 public:
-    explicit ATM(bank::Bank& bank) : bank_(bank), cash_reserve_(4096) {}
+    explicit ATM(bank::Bank& bank) : bank_(bank) {}
     ~ATM();
     bool PrepareSession(card_id_t card_id, card_pin_t pin);
     bool StartSession(account_id_t account_id, account_password_t password);
