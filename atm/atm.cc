@@ -5,6 +5,9 @@
 #include <string>
 namespace atm {
 
+ATM::~ATM() {
+}
+
 void ATM::HandleResult(const std::string& result) {
     std::cout << "ATM: " << result << std::endl;
 }
@@ -23,6 +26,7 @@ bool ATM::PrepareSession(card_id_t card_id, card_pin_t pin) {
             success = is_success;
         }
     });
+    bank_.ProcessAllEvents();
     return success;
 }
 
@@ -40,6 +44,7 @@ bool ATM::StartSession(account_id_t account_id, account_password_t password) {
             success = is_success;
         }
     });
+    bank_.ProcessAllEvents();
     return success;
 }
 
@@ -57,6 +62,7 @@ bool ATM::SubmitCheckRequest(account_id_t account_id) {
             success = is_success;
         }
     });
+    bank_.ProcessAllEvents();
     return success;
 }
 
@@ -74,6 +80,7 @@ bool ATM::SubmitDepositRequest(account_id_t account_id, dollar amount) {
             success = is_success;
         }
     });
+    bank_.ProcessAllEvents();
     return success;
 }
 
@@ -91,6 +98,7 @@ bool ATM::SubmitWithdrawRequest(account_id_t account_id, dollar amount) {
             success = is_success;
         }
     });
+    bank_.ProcessAllEvents();
     return success;
 }
 
