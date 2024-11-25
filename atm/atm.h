@@ -34,12 +34,13 @@ private:
     int16_t cash_reserve_ = 0;
     std::vector<Component *> components_;
     std::unordered_map<int, int> component_mapper_;
+    bank::Bank& bank_;
 
 public:
-    ATM(bank::Bank& bank);
+    explicit ATM(bank::Bank& bank) : bank_(bank) {}
     ~ATM();
     void StartSession();
-    void EndSession();
+    void CloseSession();
 
 
     // void ATM::insert_card(const card::Card& card);

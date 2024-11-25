@@ -13,7 +13,7 @@ void ATM::StartSession() {
     // 6) component 만들기
 }
 
-void ATM::EndSession() {
+void ATM::CloseSession() {
 
 }
 
